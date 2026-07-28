@@ -1,0 +1,22 @@
+{
+	"name": "zod1",
+	"private": true,
+	"type": "module",
+	"module": "index.ts",
+	"scripts": {
+		"index": "bun src/index.ts",
+		"schema1": "bun script/schema1.ts",
+		"format": "oxfmt",
+		"lint": "oxlint",
+		"check": "oxfmt && oxlint --fix"
+	},
+	"dependencies": {
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.3.14"
+	},
+	"peerDependencies": {
+		"typescript": "^7.0.2"
+	}
+}
