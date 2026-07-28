@@ -1,6 +1,6 @@
 # zod1
 
-Bunでzodの練習
+Bun で zod の練習
 
 ```bash
 bun ci
