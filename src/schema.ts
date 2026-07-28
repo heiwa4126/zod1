@@ -9,6 +9,29 @@ const zJsonString = z.string().transform((str, ctx) => {
 	}
 });
 
+type ParseJsonResult<TSchema extends z.ZodTypeAny> = {
+	user: z.infer<TSchema>;
+	error?: z.ZodFlattenedError<z.infer<TSchema>, string>;
+};
+
+function parseJsonWithSchema<TSchema extends z.ZodTypeAny>(
+	jsonString: string,
+	schema: TSchema
+): ParseJsonResult<TSchema> {
+	const result = zJsonString.pipe(schema).safeParse(jsonString);
+
+	if (result.success) {
+		return { user: result.data };
+	}
+	return { user: {} as z.infer<TSchema>, error: z.flattenError(result.error) };
+}
+
+export function parseJson<TSchema extends z.ZodTypeAny>(schema: TSchema) {
+	return (jsonString: string): ParseJsonResult<TSchema> => {
+		return parseJsonWithSchema(jsonString, schema);
+	};
+}
+
 const UserSchema = z.object({
 	name: z.string({
 		error: (issue) =>
@@ -16,21 +39,4 @@ const UserSchema = z.object({
 	})
 });
 
-const UserJsonSchema = zJsonString.pipe(UserSchema);
-
-type User = z.infer<typeof UserSchema>;
-type UserJsonError = z.ZodFlattenedError<User, string>;
-
-interface UserOrErr {
-	user: User;
-	error?: UserJsonError;
-}
-
-export function parseUserJson(jsonString: string): UserOrErr {
-	const result = UserJsonSchema.safeParse(jsonString);
-
-	if (result.success) {
-		return { user: result.data };
-	}
-	return { user: {} as User, error: z.flattenError(result.error) };
-}
+export const parseUserJson = parseJson(UserSchema);

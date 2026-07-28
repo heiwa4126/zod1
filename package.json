@@ -8,15 +8,14 @@
 		"schema1": "bun script/schema1.ts",
 		"format": "oxfmt",
 		"lint": "oxlint",
+		"lint-tsc": "tsc --noEmit",
 		"check": "oxfmt && oxlint --fix"
 	},
 	"dependencies": {
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
-		"@types/bun": "^1.3.14"
-	},
-	"peerDependencies": {
+		"@types/bun": "^1.3.14",
 		"typescript": "^7.0.2"
 	}
 }
