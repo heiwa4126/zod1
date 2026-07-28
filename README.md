@@ -1,6 +1,6 @@
 # zod1
 
-Bun で Zod の練習 in TypeScript
+Bun で Zod(v4) の練習 in TypeScript
 
 ```bash
 bun ci
